@@ -1,0 +1,66 @@
+import React from 'react'
+
+import { Sidebar, Segment, Loader, Dimmer } from 'semantic-ui-react'
+import { connect, useDispatch } from 'react-redux'
+import Headers from './Headers'
+import SideMenu from './Sidemenu'
+import Footer from './Footer'
+import { useEffect } from 'react'
+
+import { fetchMenu } from "../../redux/actions";
+import { Outlet } from 'react-router-dom'
+
+
+
+const Header = ({ children, menu }) => {
+
+    const dispatch = useDispatch()
+
+    const renderPage = () => {
+
+
+        console.log('render header')
+
+        /*   if (menu.length == 0) {
+  
+              return (
+                  <Segment.Group style={{ paddingTop: '100vh' }}>
+                      <Dimmer active inverted >
+                          <Loader size='massive' inline>Loading</Loader>
+                      </Dimmer>
+                  </Segment.Group>)
+          } else { */
+        return (
+            /*         <div className="ui wrapper" style={{ height: '95vh', backgroundColor: 'red' }} > */
+            <Segment.Group style={{ height: '95vh' }} >
+                <Sidebar.Pushable as={Segment} >
+                    <SideMenu />
+                    <Sidebar.Pusher>
+                        <Headers />
+                        <Outlet />
+                    </Sidebar.Pusher>
+                </Sidebar.Pushable>
+                <Footer />
+            </Segment.Group>
+        )
+
+    }
+
+    return (
+        renderPage()
+    )
+}
+
+const mapStateToProps = (state) => {
+    //  streams: Object.values(state.streams),
+    //    return { authenticated: state.auth.authenticated }
+    console.log(state.menu)
+
+    return {
+        menu: Object.values(state.menu.menu)
+    }
+}
+
+
+export default Header
+//export default connect(mapStateToProps, { fetchMenu })(Header)

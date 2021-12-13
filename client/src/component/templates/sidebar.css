@@ -1,0 +1,56 @@
+.treeMain {
+  font-size: small;
+  font-weight: bold;
+  margin-top: 0px;
+}
+.treeContent {
+  font-size: smaller;
+  text-decoration-color: cadetblue;
+}
+/* .marginlefting {
+  margin-left: 60px !important;
+}
+
+.displaynone {
+  display: none !important;
+}
+
+.displayblock {
+  display: block !important;
+}
+
+.sidebar .item i {
+  font-size: 24px;
+     margin-top: -5px !important; 
+}
+
+.logo {
+  height: 50px !important;
+  padding: 5px !important;
+}
+
+.wrapper {
+  height: 95vh;
+}
+.logo img {
+  width: 100% !important;
+  height: 38px !important;
+}
+
+.title.item {
+  padding: 0.92857143em 1.14285714em !important;
+}
+
+.dropdown .menu .header {
+  padding-top: 3.9px !important;
+  padding-bottom: 3.9px !important;
+}
+
+.pushable > .ui.fixed.menu {
+  padding-left: 260px;
+}
+
+.pushable > .pusher {
+  margin-right: 260px;
+}
+ */
