@@ -1,10 +1,15 @@
 import _ from 'lodash'
 import { FETCH_BANK, FETCH_BANKS } from '../../../redux/actions/types'
 
-const setupBankReducers = (state = {}, action) => {
+const INIT_STATE = {
+    banks: []
+}
+
+const setupBankReducers = (state = INIT_STATE, action) => {
     switch (action.type) {
         case FETCH_BANKS:
-            return { ...state, ..._.mapKeys(action.payload, 'bankcode') }
+            //            return { ...state, banks: action.payload }
+            return { ...state, banks: { ..._.mapKeys(action.payload, 'BANKCODE') } }
         case FETCH_BANK:
             return { ...state, [action.payload.bankcode]: action.payload }
         /*         case CREATE_STREAM:

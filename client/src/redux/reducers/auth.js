@@ -1,4 +1,4 @@
-import { AUTH_ERROR, AUTH_USER, FETCH_SITE } from "../actions/types"
+import { AUTH_ERROR, AUTH_USER, FETCH_SITE, FETCH_USER } from "../actions/types"
 
 const INIT_STATE = {
     authenticated: '',
@@ -21,6 +21,10 @@ const auth = (state = INIT_STATE, action) => {
         case FETCH_SITE:
             return {
                 ...state, site: action.payload
+            }
+        case FETCH_USER:
+            return {
+                ...state, user: action.payload
             }
         default:
             break;

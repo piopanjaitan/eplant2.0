@@ -1,7 +1,7 @@
 import eplant from '../../apis/eplant'
 
 
-import { SIGN_IN, SIGN_OUT, FETCH_STREAMS, AUTH_ERROR, AUTH_USER, FETCH_MENU } from "./types"
+import { SIGN_IN, SIGN_OUT, FETCH_STREAMS, AUTH_ERROR, AUTH_USER, FETCH_MENU, FETCH_USER, FETCH_BANKS } from "./types"
 
 export const signIn = (userId) => {
     return {
@@ -11,10 +11,76 @@ export const signIn = (userId) => {
 
 }
 
-export const signOut = () => {
+export const signout = () => {
+    localStorage.removeItem('token')
+
     return {
-        type: SIGN_OUT
+        type: AUTH_USER,
+        payload: ''
     }
+
+}
+
+export const signin = (formpost, callback) => async dispatch => {
+
+    try {
+
+        const response = await eplant.post('/signin', formpost)
+
+        dispatch({ type: AUTH_USER, payload: response.data.token })
+
+        localStorage.setItem('token', response.data.token)
+
+        if (callback) callback();
+    }
+    catch (error) {
+        console.log(error)
+        dispatch({ type: AUTH_ERROR, payload: 'user or password wrong' })
+
+    }
+}
+
+
+export const fetchUserInfo = () => async dispatch => {
+
+    const response = await eplant.get('/user')
+
+    dispatch({ type: FETCH_USER, payload: response.data })
+}
+
+export const fetchsite = () => async dispatch => {
+
+    try {
+        const response = await eplant.get('/site')
+
+        dispatch({ type: AUTH_USER, payload: response.data.token })
+
+        //localStorage.setItem('token', response.data.token)
+        //if (callback) callback();
+    }
+    catch (error) {
+        console.log(error)
+        dispatch({ type: AUTH_ERROR, payload: 'user or password wrong' })
+
+    }
+}
+
+export const fetchBanks = () => async dispatch => {
+
+    const response = await eplant.get('/cashbank/bankinformation')
+    // console.log(response)
+
+    dispatch({ type: FETCH_BANKS, payload: response.data })
+
+}
+
+export const fetchMenu = () => async dispatch => {
+
+    const response = await eplant.get('/menu')
+
+    //    console.log(response)
+
+    dispatch({ type: FETCH_MENU, payload: response.data })
 
 }
 
@@ -86,88 +152,3 @@ export const editStream = (id, formValues, callback) => async dispatch => {
 
     }
 } */
-
-export const signout = () => {
-    localStorage.removeItem('token')
-
-    return {
-        type: AUTH_USER,
-        payload: ''
-
-    }
-
-
-}
-
-export const signin = (formpost, callback) => async dispatch => {
-
-    try {
-
-        const response = await eplant.post('/signin', formpost)
-
-        console.log(response)
-
-        dispatch({ type: AUTH_USER, payload: response.data.token })
-
-        localStorage.setItem('token', response.data.token)
-
-        if (callback) callback();
-    }
-    catch (error) {
-        console.log(error)
-        dispatch({ type: AUTH_ERROR, payload: 'user or password wrong' })
-
-    }
-}
-
-
-export const fetchUserInfo = () => async dispatch => {
-
-    try {
-        const response = await eplant.get('/user')
-
-        dispatch({ type: AUTH_USER, payload: response.data.token })
-
-        localStorage.setItem('token', response.data.token)
-        //if (callback) callback();
-    }
-    catch (error) {
-        console.log(error)
-        dispatch({ type: AUTH_ERROR, payload: 'user or password wrong' })
-
-    }
-}
-
-export const fetchsite = () => async dispatch => {
-
-    try {
-        const response = await eplant.get('/site')
-
-        dispatch({ type: AUTH_USER, payload: response.data.token })
-
-        localStorage.setItem('token', response.data.token)
-        //if (callback) callback();
-    }
-    catch (error) {
-        console.log(error)
-        dispatch({ type: AUTH_ERROR, payload: 'user or password wrong' })
-
-    }
-}
-
-export const fetchBanks = () => async dispatch => {
-
-    const response = await eplant.get('/banks')
-    dispatch({ type: FETCH_STREAMS, payload: response.data })
-
-}
-
-export const fetchMenu = () => async dispatch => {
-
-    const response = await eplant.get('/menu')
-
-    //    console.log(response)
-
-    dispatch({ type: FETCH_MENU, payload: response.data })
-
-}

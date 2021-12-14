@@ -1,43 +1,74 @@
-import React from "react"
-import { Segment, Button, Dropdown } from "semantic-ui-react";
+import React, { useEffect } from "react"
+import { Segment, Button, Dropdown, Label, Icon } from "semantic-ui-react";
 
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { connect, useDispatch } from 'react-redux'
+import { fetchUserInfo } from '../../redux/actions'
 
-const Headers = () => {
 
-
+const Headers = ({ user }) => {
     const navigate = useNavigate()
-    //const [activeItem, setActiveItem] = useState('inbox')
+
+    const dispatch = useDispatch()
+
+    console.log(user)
 
     const handleItemClick = (e, { value }) => {
         navigate(`/${value}`)
     }
+
+    useEffect(() => {
+        dispatch(fetchUserInfo())
+
+    }, [dispatch])
 
     const options = [
         { key: 'setting', icon: 'setting', text: 'Setting', value: 'setting', onClick: handleItemClick },
         { key: 'signout', icon: 'sign-out', text: 'Sign Out', value: 'signout', onClick: handleItemClick },
     ]
 
-    return (
+    const renderHeader = () => {
+        return (
+            <Segment.Inline clearing>
+                <Button.Group
+                    color='blue'
+                    attached="top"
+                    floated='right'
+                    style={{ marginTop: '30px', paddingBottom: '20px', marginRight: '280px' }}>
+                    <Button basic content={`Company Site : ${user.site}`} color='blue' style={{ marginRight: '10px' }} />
+                    <Button  >
+                        <Icon name='user circle outline' />
+                        {user.loginid}
+                    </Button>
+                    <Dropdown
 
-        <Button.Group
-            as={Segment.basic}
-            attached="top"
-            color='blue'
-            floated='right'
-            style={{ marginTop: '30px', paddingBottom: '20px', marginRight: '280px' }}>
-            <Button content='LOGIN ID' />
-            <Dropdown
-                className='button icon'
-                floating
-                options={options}
-                trigger={<></>}
-            />
-        </Button.Group >
+                        className='button icon'
+                        floating
+                        options={options}
+                        trigger={<></>}
+                    />
+                </Button.Group >
+            </Segment.Inline>
 
-    )
+
+        )
+    }
+
+    if (!user)
+        return (<>loading </>)
+
+    return (renderHeader())
+
+
+
 }
 
+const mapStateToProps = state => {
+    // console.log(state.auth.user)
+    return {
+        user: state.auth.user
+    }
+}
 
-
-export default Headers
+export default connect(mapStateToProps, { fetchUserInfo })(Headers)
+//export default Headers

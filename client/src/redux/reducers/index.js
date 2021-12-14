@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import auth from './auth'
-import SetupBankList from '../../component/modules/setupbank/SetupBankList'
+import SetupBankList from '../../component/modules/setupbank/SetupBankReducer'
 import menu from './menu'
 
 

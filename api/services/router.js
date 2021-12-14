@@ -31,6 +31,11 @@ router.get('/', requireAuth, function (req, res) {
     res.send(req.user)
 })
 
+router.get('/user', requireAuth, function (req, res) {
+    // console.log(req)
+    res.send(req.user)
+})
+
 router.post('/signin', requireSignIn, authentication.signin);
 /* router.post('/signup', authentication.signup) */
 

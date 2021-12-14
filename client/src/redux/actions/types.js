@@ -13,6 +13,7 @@ export const UPDATE_STREAM = 'UPDATE_STREAM'
 
 
 export const FETCH_SITE = 'FETCH_SITE'
+export const FETCH_USER = 'FETCH_USER'
 
 export const FETCH_MENU = 'FETCH_MENU'
 

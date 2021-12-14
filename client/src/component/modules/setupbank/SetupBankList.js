@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ContentHeader from "../../templates/ContentHeader";
-import { Outlet } from "react-router-dom";
 
+import { connect, useDispatch } from 'react-redux'
+
+import { fetchBanks } from '../../../redux/actions'
 
 /* import { fetchBanks } from "../../../redux/actions"; */
 
@@ -18,18 +20,29 @@ const button = {
     addClickHandler
 }
 
-const SetupBankList = () => {
+const SetupBankList = (state) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchBanks())
+
+    }, [dispatch])
+
     return (
         <ContentHeader
             title="Bank Information"
             btn1={button}>
-            <div style={{ marginLeft: '1000px' }}>
-                <h1>KOSONG</h1>
-            </div>
-            <Outlet />
+
         </ContentHeader>
     )
 
 }
 
-export default requireAuth(SetupBankList)
+
+const mapStateToProps = state => {
+    console.log(state)
+    return { banks: state.data }
+}
+
+export default connect(mapStateToProps, { fetchBanks })(requireAuth(SetupBankList))
