@@ -23,7 +23,6 @@ router.route(`/bankinformation`)
 
 router.route(`/paymentvoucher`)
     .get(paymentvoucher.get)
-    .post(paymentvoucher.post)
 
 
 

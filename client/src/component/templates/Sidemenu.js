@@ -1,23 +1,16 @@
 import React, { useEffect, useMemo, useCallback, useRef, useState } from 'react'
 import './sidebar.css'
 import { Sidebar, Accordion, Image, Header } from 'semantic-ui-react'
-import { useNavigate, Link } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
-
-import { fetchMenu } from '../../redux/actions'
-
-const SideMenu = ({ ownProps, jsonData }) => {
-
-    //let jsonData = children[1]
-    const Isrerender = useRef(0)
-    const dispatch = useDispatch()
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
-    useEffect(() => {
-        Isrerender.current = Isrerender.current + 1;
-    });
+const SideMenu = () => {
 
-    //Main algorithm
+    const jsonData = useSelector((state) => state.menu.menu.values)
+
+
+
     const accordify = jsonData => {
 
         if (jsonData.length === 0) {
@@ -105,15 +98,13 @@ const SideMenu = ({ ownProps, jsonData }) => {
         )
     }
 
-    useEffect(() => {
-        dispatch(fetchMenu())
 
-    }, [dispatch])
+    // jsonData = datasss
 
-    if (Isrerender.current === 1) {
-        accordify(jsonData)
-    }
+    accordify(jsonData)
 
+
+    // console.log(datasss)
 
     if (jsonData.length === 0)
         return renderLoading()
@@ -122,11 +113,4 @@ const SideMenu = ({ ownProps, jsonData }) => {
 
 }
 
-const mapStateToProps = state => {
-    return {
-        jsonData: state.menu.menu.values
-    }
-}
-
-
-export default connect(mapStateToProps, { fetchMenu })(SideMenu)
+export default SideMenu

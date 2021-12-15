@@ -2,8 +2,8 @@ const _ = require('lodash')
 const oracledb = require('oracledb')
 const database = require('../../../oradb/dbHandler')
 
-const baseQuery = ` SELECT BANKCODE,BANKNAME,CONTROLACCOUNT,
-BANKACCOUNTCODE,AUTHORIZEDSIG1,CURRENCY,DATEREGISTERED
+const baseQuery = ` SELECT BANKCODE "bankcode",BANKNAME "bankname",CONTROLACCOUNT "controlaccount",
+BANKACCOUNTCODE "bankaccountcode",AUTHORIZEDSIG1 "authorizedsig1",CURRENCY "currency",DATEREGISTERED "dateregistered"
 FROM BANK`
 
 

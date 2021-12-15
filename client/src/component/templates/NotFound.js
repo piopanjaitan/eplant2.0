@@ -2,7 +2,9 @@ import React from "react";
 import { Image, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import requireAuth from '../auth/requireAuth'
+
+import requireAuth from "../../component/auth/requireAuth"
+
 import ContentHeader from "./ContentHeader";
 
 const NotFound = () => {
@@ -28,4 +30,4 @@ const NotFound = () => {
     )
 }
 
-export default NotFound
+export default requireAuth(NotFound)

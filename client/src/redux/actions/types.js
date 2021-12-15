@@ -19,3 +19,6 @@ export const FETCH_MENU = 'FETCH_MENU'
 
 export const FETCH_BANKS = 'FETCH_BANKS'
 export const FETCH_BANK = 'FETCH_BANK'
+
+
+export const FETCH_PVS = 'FETCH_PAYMENTVOUCHERS'

@@ -151,50 +151,42 @@ const Dashboard = () => {
 
     const columns = React.useMemo(
         () => [
+
             {
-                Header: 'Name',
-                columns: [
-                    {
-                        Header: 'First Name',
-                        accessor: 'firstName',
-                    },
-                    {
-                        Header: 'Last Name',
-                        accessor: 'lastName',
-                    },
-                ],
+                Header: 'First Name',
+                accessor: 'firstName',
             },
             {
-                Header: 'Info',
-                columns: [
-                    {
-                        Header: 'Age',
-                        accessor: 'age',
-                    },
-                    {
-                        Header: 'Visits',
-                        accessor: 'visits',
-                    },
-                    {
-                        Header: 'Status',
-                        accessor: 'status',
-                    },
-                    {
-                        Header: 'Actions',
-                        accessor: 'progress',
-                        Cell: ({ cell: { row, value } }) => {
-                            return (
-                                <div style={{ textAlign: "center" }}>
-                                    <Button.Group size="mini">
-                                        <Button primary icon="edit" content="edit" labelPosition='left' onClick={() => rowClickHandler(row)} />
-                                        <Button.Or />
-                                        <Button negative icon="delete" content="delete" labelPosition='right' onClick={() => rowClickHandler(row)} />
-                                    </Button.Group>
+                Header: 'Last Name',
+                accessor: 'lastName',
+            },
 
-                                </div>)
-                        }
-                    },
-                ],
+            {
+                Header: 'Age',
+                accessor: 'age',
+            },
+            {
+                Header: 'Visits',
+                accessor: 'visits',
+            },
+            {
+                Header: 'Status',
+                accessor: 'status',
+            },
+            {
+                Header: 'Actions',
+                accessor: 'progress',
+                Cell: ({ cell: { row, value } }) => {
+                    return (
+                        <div style={{ textAlign: "center" }}>
+                            <Button.Group size="mini">
+                                <Button primary icon="edit" content="edit" labelPosition='left' onClick={() => rowClickHandler(row)} />
+                                <Button.Or />
+                                <Button negative icon="delete" content="delete" labelPosition='right' onClick={() => rowClickHandler(row)} />
+                            </Button.Group>
+
+                        </div>)
+                }
             },
         ],
         []

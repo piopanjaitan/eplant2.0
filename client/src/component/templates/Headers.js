@@ -1,26 +1,23 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Segment, Button, Dropdown, Label, Icon } from "semantic-ui-react";
 
 import { useNavigate } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
-import { fetchUserInfo } from '../../redux/actions'
+import { useSelector } from 'react-redux'
 
 
-const Headers = ({ user }) => {
+const Headers = () => {
     const navigate = useNavigate()
 
-    const dispatch = useDispatch()
+    /* const dispatch = useDispatch() */
 
-    console.log(user)
+    const authuser = useSelector((state) => state.menu.menu.user)
+
+
 
     const handleItemClick = (e, { value }) => {
         navigate(`/${value}`)
     }
 
-    useEffect(() => {
-        dispatch(fetchUserInfo())
-
-    }, [dispatch])
 
     const options = [
         { key: 'setting', icon: 'setting', text: 'Setting', value: 'setting', onClick: handleItemClick },
@@ -29,16 +26,16 @@ const Headers = ({ user }) => {
 
     const renderHeader = () => {
         return (
-            <Segment.Inline clearing>
+            <Segment.Inline >
                 <Button.Group
                     color='blue'
                     attached="top"
                     floated='right'
                     style={{ marginTop: '30px', paddingBottom: '20px', marginRight: '280px' }}>
-                    <Button basic content={`Company Site : ${user.site}`} color='blue' style={{ marginRight: '10px' }} />
-                    <Button  >
+                    <Button basic content={`Company Site : ${authuser.site}`} color='blue' style={{ marginRight: '10px' }} />
+                    <Button>
                         <Icon name='user circle outline' />
-                        {user.loginid}
+                        {authuser.loginid}
                     </Button>
                     <Dropdown
 
@@ -54,7 +51,7 @@ const Headers = ({ user }) => {
         )
     }
 
-    if (!user)
+    if (!authuser)
         return (<>loading </>)
 
     return (renderHeader())
@@ -62,13 +59,4 @@ const Headers = ({ user }) => {
 
 
 }
-
-const mapStateToProps = state => {
-    // console.log(state.auth.user)
-    return {
-        user: state.auth.user
-    }
-}
-
-export default connect(mapStateToProps, { fetchUserInfo })(Headers)
-//export default Headers
+export default Headers 

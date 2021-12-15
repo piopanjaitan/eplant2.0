@@ -12,37 +12,45 @@ import { Outlet } from 'react-router-dom'
 
 
 
-const Header = ({ children, menu }) => {
-
+const Header = ({ menu }) => {
+    console.log('render header')
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchMenu())
+
+    }, [dispatch])
+
 
     const renderPage = () => {
 
 
-        console.log('render header')
 
-        /*   if (menu.length == 0) {
-  
-              return (
-                  <Segment.Group style={{ paddingTop: '100vh' }}>
-                      <Dimmer active inverted >
-                          <Loader size='massive' inline>Loading</Loader>
-                      </Dimmer>
-                  </Segment.Group>)
-          } else { */
-        return (
-            /*         <div className="ui wrapper" style={{ height: '95vh', backgroundColor: 'red' }} > */
-            <Segment.Group style={{ height: '95vh' }} >
-                <Sidebar.Pushable as={Segment} >
-                    <SideMenu />
-                    <Sidebar.Pusher>
-                        <Headers />
-                        <Outlet />
-                    </Sidebar.Pusher>
-                </Sidebar.Pushable>
-                <Footer />
-            </Segment.Group>
-        )
+        if (menu.length === 0) {
+
+            return (
+                <Segment.Group style={{ paddingTop: '100vh' }}>
+                    <Dimmer active inverted >
+                        <Loader size='massive' inline>Loading</Loader>
+                    </Dimmer>
+                </Segment.Group>)
+        } else {
+            return (
+                /*         <div className="ui wrapper" style={{ height: '95vh', backgroundColor: 'red' }} > */
+                <Segment.Group style={{ height: '95vh' }} >
+                    <Sidebar.Pushable as={Segment} >
+                        <SideMenu />
+                        <Sidebar.Pusher>
+                            <Headers />
+                            <Outlet />
+                        </Sidebar.Pusher>
+                    </Sidebar.Pushable>
+                    <Footer />
+                </Segment.Group>
+            )
+
+        }
+
 
     }
 
@@ -52,15 +60,11 @@ const Header = ({ children, menu }) => {
 }
 
 const mapStateToProps = (state) => {
-    //  streams: Object.values(state.streams),
-    //    return { authenticated: state.auth.authenticated }
-    console.log(state.menu)
-
     return {
-        menu: Object.values(state.menu.menu)
+        menu: state.menu.menu
     }
 }
 
 
-export default Header
-//export default connect(mapStateToProps, { fetchMenu })(Header)
+//export default Header
+export default connect(mapStateToProps, { fetchMenu })(Header)

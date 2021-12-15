@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
 const ChildComponent = ChildComponent => {
 
-    function ComposedComponent({ auths }) {
+    function ComposedComponent() {
         const navigate = useNavigate();
+
+        const auths = useSelector((state) => state.auth.authenticated)
 
         const authHandler = () => {
             if (!auths)
@@ -20,13 +22,14 @@ const ChildComponent = ChildComponent => {
 
         return <ChildComponent />
     }
+    /* 
+        const mapStateToProps = state => {
+            return { auths: state.auth.authenticated }
+        }
+     */
 
-    const mapStateToProps = state => {
-        return { auths: state.auth.authenticated }
-    }
-
-
-    return connect(mapStateToProps)(ComposedComponent)
+    //    return connect(mapStateToProps)(ComposedComponent)
+    return ComposedComponent
 }
 
 export default ChildComponent

@@ -59,8 +59,8 @@ const App = (state) => {
     return (
         <Router>
             <Routing>
-                <BankInformationRoutes />
-                {/*<Routes message="" >
+                {/* <BankInformationRoutes />
+                 */}{/*<Routes message="" >
                           <Route path="/streams/new" exact element={<StreamCreate />} />
                 <Route path="/streams/delete/:id" exact element={<StreamDelete />} />
                 <Route path="/streams/edit/:id" exact element={<StreamEdit />} />
@@ -71,7 +71,7 @@ const App = (state) => {
                     <Route path="*" element={<NotFound />} />
                     {<BankInformationRoutes />}
                 </Routes>*/}
-                {/* {
+                {
                     (() => {
                         if (!state.authenticated) {
                             console.log('unauthorized')
@@ -88,7 +88,7 @@ const App = (state) => {
                             }
                         }
                     })()
-                } */}
+                }
             </Routing>
         </Router>
     )

@@ -8,8 +8,8 @@ const INIT_STATE = {
 const setupBankReducers = (state = INIT_STATE, action) => {
     switch (action.type) {
         case FETCH_BANKS:
-            //            return { ...state, banks: action.payload }
-            return { ...state, banks: { ..._.mapKeys(action.payload, 'BANKCODE') } }
+            return { ...state, banks: action.payload }
+        //    return { ...state, banks: { ..._.mapKeys(action.payload, 'bankcode') } }
         case FETCH_BANK:
             return { ...state, [action.payload.bankcode]: action.payload }
         /*         case CREATE_STREAM:

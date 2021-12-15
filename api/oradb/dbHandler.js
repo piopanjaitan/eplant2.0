@@ -15,6 +15,13 @@ const closeConnection = async (schema) => {
  * call to epmsapps connection 
  */
 
+
+const limitQuery = subquery => {
+    return `SELECT z.*,ceil ("total_rows"/:limitsize ) "max_page"
+            FROM (SELECT a.*, COUNT (*) OVER () "total_rows", ROWNUM "rnum"
+            FROM ( ${subquery} ) a)z
+            WHERE "rnum" BETWEEN (( :page * :limitsize) - :limitsize + 1 ) and (:page * :limitsize)` }
+
 const appsExecute = async (statement, binds = []) => {
 
 
@@ -139,6 +146,60 @@ const siteExecute = async (users, statement, binds = [], opts = {}) => {
     });
 }
 
+
+const siteLimitExecute = async (users, statement, binds = [], opts = {}) => {
+    return new Promise(async (resolve, reject) => {
+        let conn;
+        let dbConnection;
+
+        opts.outFormat = oracledb.OBJECT;
+
+        // console.log(binds)
+
+        console.log(limitQuery(statement))
+
+        switch (users.site) {
+            case 'GCM':
+                dbConnection = dbCreds.gcmPool;
+                break;
+            case 'SMG':
+                dbConnection = dbCreds.smgPool;
+                break;
+            case 'SBE':
+                dbConnection = dbCreds.sbePool;
+                break;
+            case 'SLM':
+                dbConnection = dbCreds.slmPool;
+                break;
+            case 'SJE':
+                dbConnection = dbCreds.sjePool;
+                break;
+            default:
+                dbConnection = dbCreds.appsPool;
+                break;
+        }
+
+        try {
+            conn = await oracledb.getConnection(dbConnection);
+
+            const result = await conn.execute(statement, binds, opts)
+
+            resolve(result)
+        } catch (err) {
+            reject(err)
+        } finally {
+            if (conn) { // conn assignment worked, need to close
+                try {
+                    await conn.close()
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }
+    });
+}
+
+
 const simpleExecute = async (statement, binds = [], opts = {}) => {
     return new Promise(async (resolve, reject) => {
         let conn;
@@ -242,5 +303,6 @@ module.exports = {
     functionExecute,
     appsExecute,
     getObject,
-    siteExecute
+    siteExecute,
+    siteLimitExecute
 }

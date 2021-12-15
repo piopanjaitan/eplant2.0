@@ -1,8 +1,6 @@
 import { FETCH_MENU } from "../actions/types"
 
 const INIT_STATE = {
-    authenticated: '',
-    errorMessage: '',
     menu: []
 }
 

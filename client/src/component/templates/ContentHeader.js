@@ -1,8 +1,13 @@
 import React from "react";
 import { Container, Header, Segment, Breadcrumb, Grid, Button, Divider } from "semantic-ui-react";
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const ContentHeader = ({ children, title, btn1 }) => {
+
+
+    const location = useLocation();
+    //console.log(location.);
+
     return (
         <div >
             <Header size="huge"
@@ -18,7 +23,7 @@ const ContentHeader = ({ children, title, btn1 }) => {
                             <Breadcrumb>
                                 <Breadcrumb.Section as={Link} link to="/">Home</Breadcrumb.Section>
                                 <Breadcrumb.Divider />
-                                <Breadcrumb.Section active>Dashboard</Breadcrumb.Section>
+                                <Breadcrumb.Section active>{location.pathname}</Breadcrumb.Section>
                             </Breadcrumb>
                         </Grid.Column>
                     </Grid.Row>
